@@ -33,3 +33,13 @@ https://arcy24.medium.com/hack-the-box-arctic-93775983425c
 ## Hack the Box Curling
 
 https://arcy24.medium.com/hack-the-box-curling-ac7ccf67c859
+
+## Hack the Box Remote
+
+https://arcy24.medium.com/hack-the-box-remote-300f4e09518a
+
+## Hack The Box “Bashed”
+
+https://arcy24.medium.com/hack-the-box-bashed-cb42820da9ab
+
+
