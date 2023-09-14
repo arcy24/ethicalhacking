@@ -1,0 +1,3 @@
+$recoverypw = ConvertTo-SecureString "P@ssW0rD!" -AsPlainText -Force
+Install-ADDSForest -DomainNetbiosName testlab -DomainName testlab.local -DomainMode "WinThreshold" -ForestMode "WinThreshold" -InstallDns -LogPath "C:\Windows\NTDS" -SysvolPath "C:\Windows\SYSVOL" -SafeModeAdministratorPassword $recoverypw -DatabasePath "C:\Windows\NTDS" -NoRebootOnCompletion
+
