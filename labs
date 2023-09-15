@@ -1,3 +1,8 @@
+Windows 2019 Setup
+
+Network Adapters and in this order from left to right: Internal Network, Host-Only Network, NAT network adapter.
+
+
 # Part One: Set the networking settings
  
 $netConfig = Get-NetIPConfiguration
