@@ -5,3 +5,6 @@ Install-WindowsFeature DHCP -IncludeManagementTools|fl
 Restart-Computer -Force
 
 Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
+
+	
+Get-WindowsCapability -Name RSAT* -Online | Select-Object -Property DisplayName, State
