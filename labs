@@ -102,3 +102,15 @@ Set-Acl $FTPRootDir $Acl
 
  New-Item -Path "C:\Windows\SYSVOL\sysvol\testlab.local\Policies\beh\Machine\Preferences\" -Name "Groups.xml" -ItemType File
 
+#Disable Defender Via Group Policy
+
+Launch Group Policy Management console. 
+Click on the drop-down for the domains folder and click on “Create a GPO in this domain, and Link it here…” Name it “Disable Defender” and click ok. 
+Now go to the “Linked Group Policy Objects” tab.
+Right-click on the new policy and click Edit then navigate to “Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Defender”. 
+Click on the “Turn Off Windows Defender Antivirus” setting and enable it.
+
+
+
+
+
