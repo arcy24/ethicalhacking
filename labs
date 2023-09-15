@@ -1,10 +1,29 @@
+# Part One: Set the networking settings
+ 
+$netConfig = Get-NetIPConfiguration
+ foreach($thing in $netConfig)
+{      
+if ($thing.InterfaceDescription -Like "*Desktop Adapter") {
+$intalias = $thing.InterfaceAlias
+      }
+
+  }
+New-NetIPAddress -IPAddress 10.0.0.33 -InterfaceAlias $intalias -AddressFamily IPv4 -PrefixLength 24
+Set-DnsClientServerAddress -InterfaceAlias $intalias -ServerAddress 127.0.0.1
+Rename-Computer -NewName BEHDC
+Set-SmbServerConfiguration -RequireSecuritySignature $false
+Restart-Computer -Force
+
+
+# Part Two: Install Services
+
+Import-Module ServerManager
+Install-WindowsFeature -Name AD-Domain-Services 
+-IncludeManagementTools| fl
 $recoverypw = ConvertTo-SecureString "P@ssW0rD!" -AsPlainText -Force
-Install-ADDSForest -DomainNetbiosName testlab -DomainName testlab.local -DomainMode "WinThreshold" -ForestMode "WinThreshold" -InstallDns -LogPath "C:\Windows\NTDS" -SysvolPath "C:\Windows\SYSVOL" -SafeModeAdministratorPassword $recoverypw -DatabasePath "C:\Windows\NTDS" -NoRebootOnCompletion
+Install-ADDSForest -DomainNetbiosName testlab -DomainName testlab.local -DomainMode "WinThreshold" -ForestMode "WinThreshold" -InstallDns -LogPath "C:\Windows\NTDS" -SysvolPath "C:\Windows\SYSVOL" -SafeModeAdministratorPassword $recoverypw -DatabasePath "C:\Windows\NTDS" -NoRebootOnCompletion 
 
 Install-WindowsFeature DHCP -IncludeManagementTools|fl
 Restart-Computer -Force
 
-Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
 
-	
-Get-WindowsCapability -Name RSAT* -Online | Select-Object -Property DisplayName, State
