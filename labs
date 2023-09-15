@@ -28,7 +28,7 @@ Restart-Computer -Force
 
 # Part Three: Local configurations
 # Go to Server Manager and finish "DHCP Configuration"
-# Go to Server Manager and finish "promote to Domain Controller"
+# Go to Server Manager and finish "promote to Domain Controller" only if applicable
 # Continue
 
 # Turn off firewalls
