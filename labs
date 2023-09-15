@@ -26,4 +26,74 @@ Install-ADDSForest -DomainNetbiosName testlab -DomainName testlab.local�
 Install-WindowsFeature DHCP -IncludeManagementTools|fl
 Restart-Computer -Force
 
+# Part Three: Local configurations
+# Go to Server Manager and finish "DHCP Configuration"
+# Go to Server Manager and finish "promote to Domain Controller"
+# Continue
+
+# Turn off firewalls
+Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled False
+
+# Turn on RDP
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
+
+ # Turn on ANSI color bit
+REG ADD HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1
+
+# Set the RDP NLA setting to Disabled
+(Get-WmiObject -class "Win32_TSGeneralSetting" -Namespace root\cimv2\terminalservices -ComputerName $env:computername -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(0)
+
+# Turn on WinRM
+Enable-PSRemoting -Force
+
+# Stop annoying power setting which locks screen
+Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\238C9FA8-0AAD-41ED-83F4-97BE242C8F20\7bc4a2f9-d8fc-4469-b07b-33eb785aaca0' -name "Attributes" -value 2
+
+
+# Make new SMB shares
+New-Item "C:\Shares\PUBLIC" –type directory
+New-SmbShare -Name PUBLIC -Path C:\Shares\PUBLIC -FullAccess Everyone
+
+# Allow insecure SMB auth
+$regpath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\LanmanWorkstation'
+New-Item $regpath -Force | Out-Null
+Set-ItemProperty -Path $regpath -name "AllowInsecureGuestAuth" -value 1
+
+# Allow null SMB sessions
+$regp2 = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters'
+New-ItemProperty -Path $regp2 -PropertyType 'MultiString' -Name 'NullSessionShares' -Value @('PUBLIC')
+
+# Install Webserver & FTP
+Install-WindowsFeature -name Web-Server -IncludeManagementTools
+Install-WindowsFeature Web-FTP-Server -IncludeAllSubFeature
+Import-Module WebAdministration
+$FTPSite = 'test'  
+$FTPRootDir = 'C:\inetpub\wwwroot'
+
+
+$FTPPort = 21  
+New-WebFtpSite -Name $FTPSite -Port $FTPPort -PhysicalPath $FTPRootDir -Force
+
+# Enable basic authentication on the FTP site  
+$FTPPath = "IIS:\Sites\$FTPSite"  
+$BasicAuth = 'ftpServer.security.authentication.basicAuthentication.enabled'
+$AnonAuth = 'ftpServer.security.authentication.anonymousAuthentication.enabled'  
+Set-ItemProperty -Path $FTPPath -Name $BasicAuth -Value $True  
+Set-ItemProperty -Path $FTPPath -Name $AnonAuth -Value $True
+Set-ItemProperty -Path $FTPPath -Name ftpServer.security.ssl.controlChannelPolicy -Value "SslAllow"
+Set-ItemProperty -Path $FTPPath -Name ftpServer.security.ssl.dataChannelPolicy -Value "SslAllow" 
+Set-ItemProperty -Path $FTPPath -Name ftpServer.userIsolation.mode -Value "None" 
+Add-WebConfiguration "/system.ftpServer/security/authorization" -value @{accessType="Allow";roles="";permissions="Read,Write";users="*"} -PSPath "IIS:\" -location "test"
+Restart-WebItem "IIS:\Sites\$FTPSite" -Verbose
+
+
+$Acl = Get-Acl $FTPRootDir
+$Perms = New-Object System.Security.AccessControl.FileSystemAccessRule("Users", "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
+$Acl.SetAccessRule($Perms)
+Set-Acl $FTPRootDir $Acl
+
+# Make Groups.mxl 
+ New-Item -Path "C:\Windows\SYSVOL\sysvol\testlab.local\Policies\beh\Machine\Preferences\" -Name "Groups" -ItemType "directory"
+
+ New-Item -Path "C:\Windows\SYSVOL\sysvol\testlab.local\Policies\beh\Machine\Preferences\" -Name "Groups.xml" -ItemType File
 
