@@ -110,6 +110,103 @@ Now go to the “Linked Group Policy Objects” tab.
 Right-click on the new policy and click Edit then navigate to “Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Defender”. 
 Click on the “Turn Off Windows Defender Antivirus” setting and enable it.
 
+#DNS Zone Transfer Misconfiguration
+
+Hit the Windows key (the Windows logo button on the bottom left of your home screen) and type in “Server Manager” and hit enter. 
+Click on DNS Manager from the top right corner drop-down of tools from within Server Manager. 
+Click on BEHDC.testlab.local then Forward Lookup Zones and right-click on testlab.local and select Properties. 
+Click on the Zone Transfers tab and check the Allow zone transfers box and select the options that read “allow zone transfers to any server”.
+
+
+Create A Vulnerable Groups.xml File
+
+Create a new text file using Notepad. Copy the contents of Figure 2.7 and paste them into the file. Save the file as “Groups.xml”.  
+Move the file to this folder: C:\Windows\SYSVOL\sysvol\testlab.local\Policies\beh\Machine\Preferences\Groups\Groups.xml
+
+<?xml version="1.0" encoding="utf-8" ?> 
+- <Groups clsid="{3125E937-EB16-4b4c-9934-544FC6D24D26}">
+- <User clsid="{DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1}" name="bobjones" image="2" changed="" uid="{D8F883E3-6475-4519-96AC-8B88C37C3D2F}">
+  <Properties action="U" newName="" fullName="bob jones" description="" cpassword="VPe/o9YRyz2cksnYRbNeQj35w9KxQ5ttbvtRaAVqxaE" changeLogon="0" noChange="0" neverExpires="0" acctDisabled="0" userName="bobjones" /> 
+  </User>
+  </Groups>
+  <?xml version="1.0" encoding="utf-8" ?> 
+- <Groups clsid="{3125E937-EB16-4b4c-9934-544FC6D24D26}">
+- <User clsid="{DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1}" name="jimbob" image="0" changed="" uid="{1BC9E48C-C598-4403-8228-BC6569D7B52F}">
+  <Properties action="C" fullName="jim bob" description="" cpassword="TduTdTKqskglA4YxCaajGrkyCbE1RRKpOC9cd/DVjvo" changeLogon="0" noChange="0" neverExpires="0" acctDisabled="0" subAuthority="" userName="jimbob" /> 
+  </User>
+
+#Add HTTP Activation Support to IIS Server 
+
+Log in to the Windows server as the Administrator. 
+Add a new feature by opening the “Add Roles and Features Wizard” and select “.NET Framework 4.7 Features”, and then click on “WCF Services” then click on “HTTP Activation”. 
+Click on “Add Features” button and proceed.
+
+#Configure Active Directory
+
+Log in to the Windows server as the administrator. Run the following commands in a PowerShell prompt with Administrator-level privilege. 
+This can be done by hovering over a PowerShell prompt icon in the taskbar and right-click on “Run As Administrator”.
+
+New-ADUser -Name "johnj" -GivenName "johnj" -SamAccountName "johnj" -AccountPassword (ConvertTo-SecureString "Player1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "johnj" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "johnj" -AllowReversiblePasswordEncryption $true
+
+New-ADUser -Name "jimbob" -GivenName "jimbob" -SamAccountName "jimbob" -AccountPassword (ConvertTo-(ConvertTo-SecureString "Gosportsteam1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "jimbob" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "jimbob"
+
+New-ADUser -Name "da-jimbob" -GivenName "jimbob" -SamAccountName "da-jimbob" -AccountPassword (ConvertTo-SecureString "Gosportsteam1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "da-jimbob" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "da-jimbob"
+
+New-ADUser -Name "cynthia" -GivenName "cynthia" -SamAccountName "cynthia" -AccountPassword (ConvertTo-SecureString "Password123" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "cynthia" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "cynthia"
+
+New-ADUser -Name "jackr" -GivenName "jackr" -SamAccountName "jackr" -AccountPassword (ConvertTo-SecureString "Ineedaraise99" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "jackr" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "jackr"
+
+New-ADUser -Name "da-cynthia" -GivenName "da-cynthia" -SamAccountName "da-cynthia" -AccountPassword (ConvertTo-SecureString "Password123" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "da-cynthia" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "da-cynthia"
+
+New-ADUser -Name "wa-travisb" -GivenName "wa-travisb" -SamAccountName "wa-travisb" -AccountPassword (ConvertTo-SecureString "Qwerty2020" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "wa-travisb" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "wa-travisb"
+
+New-ADUser -Name "bobjones" -GivenName "bobjones" -SamAccountName "bobjones" -AccountPassword (ConvertTo-SecureString "Password1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "bobjones" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "bobjones"
+
+New-ADUser -Name "da-bobjones" -GivenName "da-bobjones" -SamAccountName "da-bobjones" -AccountPassword (ConvertTo-SecureString "Hyperdrive1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "da-bobjones" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "da-bobjones"
+
+New-ADUser -Name "sa-robbyg" -GivenName "sa-robbyg" -SamAccountName "sa-robbyg" -AccountPassword (ConvertTo-SecureString "RobbyRules2020" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "sa-robbyg" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "sa-robbyg"
+
+New-ADUser -Name "svc-legacyapp" -GivenName "svc-legacyapp" -SamAccountName "svc-legacyapp" -AccountPassword (ConvertTo-SecureString "Summer2020" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "svc-legacyapp" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "svc-legacyapp" -ServicePrincipalNames "svc-legacyapp/behdc.testlab.local:1234/cn=svc-legacyapp,ou=Users,dc=testlab,dc=local"
+
+Get-ADUser -Identity "svc-legacyapp" | Set-ADAccountControl -DoesNotRequirePreAuth:$true
+
+New-ADUser -Name "svc-customapp" -GivenName "svc-customapp" -SamAccountName "svc-customapp" -AccountPassword (ConvertTo-SecureString "Fall2020" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "svc-customapp" -Enabled $true -PasswordNeverExpires $true 
+-UserPrincipalName "svc-customapp" -ServicePrincipalNames "svc-customapp/behdc.testlab.local:1234/cn=svc-customapp,ou=Users,dc=testlab,dc=local"
+
+New-ADUser -Name "wa-kennyp" -GivenName "wa-kennyp" -SamAccountName "wa-kennyp" -AccountPassword (ConvertTo-SecureString "Secret1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "wa-kennyp" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "wa-kennyp"
+
+New-ADGroup -Name "Workstation Admins" -SamAccountName WorkstationAdmins -GroupCategory Security -GroupScope Global -DisplayName "Workstation Administrators" -Path "CN=Users,DC=testlab,DC=local" -Description "Members of this group are Workstation Administrators"
+
+New-ADGroup -Name "Server Admins" -SamAccountName ServerAdmins -GroupCategory Security -GroupScope Global -DisplayName "Server Administrators" -Path "CN=Users,DC=testlab,DC=local" -Description "Members of this group are Server Administrators"
+
+Add-ADGroupMember -Identity WorkstationAdmins -Members "wa-kennyp"
+Add-ADGroupMember -Identity WorkstationAdmins -Members "wa-travisb"
+Add-ADGroupMember -Identity ServerAdmins -Members "sa-robbyg"
+Add-ADGroupMember -Identity "Domain Admins" -Members "da-jimbob"
+Add-ADGroupMember -Identity "Domain Admins" -Members "da-cynthia"
+Add-ADGroupMember -Identity "Domain Admins" -Members "da-bobjones"
+
+# Add local admin to server
+net localgroup Administrators /add sa-robbyg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
