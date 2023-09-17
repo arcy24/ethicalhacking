@@ -158,6 +158,11 @@ $check2 = Get-FileHash -Algorithm MD5 "C:\Users\Public\essfunc.dll"
 #Install MySQL 
 choco install mysql -y | Out-Null
 
+#Check mysql installation
+Browse to C:\Tools\mysql\current\ 
+If you have files and folders here, it is good to go. 
+
+
 # Connector/NET is a fully-managed ADO.NET driver for MySQL
 Invoke-WebRequest -Uri "https://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-8.0.26.msi" -OutFile "C:\Users\Public\mysql-connector-net-8.0.26.msi" | Out-Null
 
@@ -168,6 +173,7 @@ msiexec.exe  /I "C:\Users\Public\mysql-connector-net-8.0.26.msi" /quiet
 Add-Type -Path 'C:\Program Files (x86)\MySQL\MySQL Connector Net 8.0.26\Assemblies\v4.5.2\MySql.Data.dll'
 
 $Conn = [MySql.Data.MySqlClient.MySqlConnection]@{ConnectionString='server=127.0.0.1;uid=root;pwd=;database='}
+#If you get an error such as unable to connect to mysql instance, run "C:\tools\mysql\bin\mysqld"
 
 $Conn.Open()
 
@@ -212,6 +218,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/corelan/mona/master/mo
 # Install python3
 
 choco install python3 -y | Out-Null; choco install pip3 -y | Out-Null;refreshenv | Out-Null 
+
 choco install dotnet3.5 -y
 
 # Restart for changes to take effect
@@ -219,9 +226,13 @@ Restart-Computer -Force
 
 #Install Immunity Debugger
 Download and install Immunity Debugger (free) from www.immunityinc.com/products/debugger.
+Download it here -> https://u.pcloud.link/publink/show?code=kZyF2GVZ4TXEUUWXIShJnt8hNEX0Dh54LoQk
+
+#While installing Immunity, it may ask you to install Python 2.7.1, go ahead and proceed. 
+
 Open a new PowerShell ISE window with Administrator privileges. Run this line in PowerShell.
 
-Copy-Item -Path "C:\Users\Public\mona.py" -Destination "C:\Program Files (x86)\Immunity Inc\Immunity Debugger\PyCommands""
+Copy-Item -Path "C:\Users\Public\mona.py" -Destination "C:\Program Files (x86)\Immunity Inc\Immunity Debugger\PyCommands"
 
 #Install Weak Permissions Service
 In order to install this vulnerability, we need to find out the unique SID value for the domain. Once you run the “whoami /user” command plug this value into the final command you see below, where you see $sidVALUE.
@@ -235,6 +246,7 @@ sc.exe create "vulnservice2" binPath="C:\Program Files\VulnService\Vuln Service 
 whoami /user
 
 sc.exe sdset vulnservice2 "D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$sidVALUE)"
+
 
 
 
