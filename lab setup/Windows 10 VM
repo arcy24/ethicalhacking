@@ -2,3 +2,12 @@
 
 #Create new VM in VirtualBox 
 
+Windows 10 Setup
+
+Network Adapters from Left to Right in VirtualBox setup: right: Internal Network, Host-Only Network, NAT network adapter.
+
+Go through the default Windows 10 setup and set Admin password.
+
+Install Guest Additions CD Image
+
+
