@@ -105,8 +105,12 @@ Set-Acl $FTPRootDir $Acl
 Launch Group Policy Management console. 
 Click on the drop-down for the domains folder and click on “Create a GPO in this domain, and Link it here…” Name it “Disable Defender” and click ok. 
 Now right-click the Disable Defender policy and Edit.
-Right-click on the new policy and click Edit then navigate to “Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Defender”. 
+Navigate to “Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Defender”. 
 Click on the “Turn Off Windows Defender Antivirus” setting and enable it.
+
+#Disable Windows Update
+On the same policy, Navigate to “Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Update”.
+Click on Configure Automatic Updates setting and disable it.
 
 #DNS Zone Transfer Misconfiguration
 
@@ -118,7 +122,7 @@ Click on the Zone Transfers tab and check the Allow zone transfers box and selec
 
 Create A Vulnerable Groups.xml File
 
-Create a new text file using Notepad. Copy the contents of Figure 2.7 and paste them into the file. Save the file as “Groups.xml”.  
+Create a new text file using Notepad and run Notepad with Administrator privilege. Copy the contents below and paste them into the file. Save the file as “Groups.xml”.  
 Move the file to this folder: C:\Windows\SYSVOL\sysvol\testlab.local\Policies\beh\Machine\Preferences\Groups\Groups.xml
 
 <?xml version="1.0" encoding="utf-8" ?> 
@@ -135,9 +139,9 @@ Move the file to this folder: C:\Windows\SYSVOL\sysvol\testlab.local\Policies\be
 
 #Add HTTP Activation Support to IIS Server 
 
-Log in to the Windows server as the Administrator. 
+Go to the Server Manager Dashboard -> Manage -> Add Roles and Features
 Add a new feature by opening the “Add Roles and Features Wizard” and select “.NET Framework 4.7 Features”, and then click on “WCF Services” then click on “HTTP Activation”. 
-Click on “Add Features” button and proceed.
+Click on “Add Features” button and proceed with the installation.
 
 #Configure Active Directory
 
