@@ -117,7 +117,9 @@ Add-LocalGroupMember -Group "Remote Desktop Users" -Member "bobjones"
 
 # Vuln Service Unquoted Service Path
 
-New-Item -ItemType directory -Path "C:\Program Files\Fake Service\Fake Service 9.0" sc.exe create "vulnservice" binPath="C:\Program Files\Fake Service\Fake Service 9.0\Fake.exe" start=auto DisplayName="Fake Service"
+New-Item -ItemType directory -Path "C:\Program Files\Fake Service\Fake Service 9.0" 
+
+sc.exe create "vulnservice" binPath="C:\Program Files\Fake Service\Fake Service 9.0\Fake.exe" start=auto DisplayName="Fake Service"
 
 icacls.exe "C:\Program Files\Fake Service" /grant bobjones:rw
 
@@ -132,13 +134,17 @@ if (Test-Path -Path "C:\Program Files\VulnService\Vuln Service 5.6")
 
 # Install chocolatey
 
-Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://community.chocolatey.org/install.ps1 -UseBasicParsing | iex choco install sysinternals --params "/InstallDir:C:\Users\Public\sysinternals" -y --force
-choco install visualstudio2019community -y --force
+Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://community.chocolatey.org/install.ps1 -UseBasicParsing | iex 
 
+choco install sysinternals --params "/Install Dir:C:\Users\Public\sysinternals" -y --force
+
+choco install visualstudio2019community -y --force
 
 #Download Vulnserver
 
-Invoke-WebRequest -Uri "https://github.com/stephenbradshaw/vulnserver/blob/master/vulnserver.exe?raw=true" -OutFile "C:\Users\Public\vulnserver.exe" | Out-Null
+Invoke-WebRequest -Uri "https://github.com/stephenbradshaw/vulnserver/blob/master/essfunc.dll?raw=true" -OutFile "C:\Users\Public\essfunc.dll" | Out-Null
+
+#Check Hash. You may need to run this using Windows Powershell ISE in Admin priv
 
 $check2 = Get-FileHash -Algorithm MD5 "C:\Users\Public\essfunc.dll"
 
@@ -230,13 +236,6 @@ whoami /user
 
 sc.exe sdset vulnservice2 "D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$sidVALUE)"
 
-
-
-
-
-
-
-The Ethical Hacking Guru. Become An Ethical Hacker (p. 60). Independent. Kindle Edition. 
 
 
 
