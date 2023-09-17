@@ -74,8 +74,6 @@ Install-WindowsFeature Web-FTP-Server -IncludeAllSubFeature
 Import-Module WebAdministration
 $FTPSite = 'test'  
 $FTPRootDir = 'C:\inetpub\wwwroot'
-
-
 $FTPPort = 21  
 New-WebFtpSite -Name $FTPSite -Port $FTPPort -PhysicalPath $FTPRootDir -Force
 
