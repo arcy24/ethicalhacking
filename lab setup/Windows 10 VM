@@ -101,6 +101,7 @@ $cred.GetNetworkCredential().Password
 
 
 #Join to testlab.local domain
+#If this does not work in PS, you can do this via UI and add the Win10 do the domain following the information below.
 
 $domain = "testlab"
 $password = "Hyperdrive1" | ConvertTo-SecureString -asPlainText -Force
