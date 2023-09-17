@@ -172,8 +172,7 @@ New-ADUser -Name "svc-legacyapp" -GivenName "svc-legacyapp" -SamAccountName "svc
 
 Get-ADUser -Identity "svc-legacyapp" | Set-ADAccountControl -DoesNotRequirePreAuth:$true
 
-New-ADUser -Name "svc-customapp" -GivenName "svc-customapp" -SamAccountName "svc-customapp" -AccountPassword (ConvertTo-SecureString "Fall2020" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "svc-customapp" -Enabled $true -PasswordNeverExpires $true 
--UserPrincipalName "svc-customapp" -ServicePrincipalNames "svc-customapp/behdc.testlab.local:1234/cn=svc-customapp,ou=Users,dc=testlab,dc=local"
+New-ADUser -Name "svc-customapp" -GivenName "svc-customapp" -SamAccountName "svc-customapp" -AccountPassword (ConvertTo-SecureString "Fall2020" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "svc-customapp" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "svc-customapp" -ServicePrincipalNames "svc-customapp/behdc.testlab.local:1234/cn=svc-customapp,ou=Users,dc=testlab,dc=local"
 
 New-ADUser -Name "wa-kennyp" -GivenName "wa-kennyp" -SamAccountName "wa-kennyp" -AccountPassword (ConvertTo-SecureString "Secret1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "wa-kennyp" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "wa-kennyp"
 
