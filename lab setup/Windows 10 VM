@@ -235,7 +235,7 @@ Open a new PowerShell ISE window with Administrator privileges. Run this line in
 Copy-Item -Path "C:\Users\Public\mona.py" -Destination "C:\Program Files (x86)\Immunity Inc\Immunity Debugger\PyCommands"
 
 #Install Weak Permissions Service
-In order to install this vulnerability, we need to find out the unique SID value for the *domain*. Once you run the “whoami /user” command plug this value into the final command you see below, where you see $sidVALUE.
+In order to install this vulnerability, we need to find out the unique SID value for the **domain**. Once you run the “whoami /user” command plug this value into the final command you see below, where you see $sidVALUE.
 Open a new PowerShell ISE window with Administrator privileges. Run these lines in PowerShell.
 
 Set-MpPreference -DisableRealtimeMonitoring $true
