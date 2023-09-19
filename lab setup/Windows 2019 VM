@@ -150,7 +150,7 @@ This can be done by hovering over a PowerShell prompt icon in the taskbar and ri
 
 New-ADUser -Name "johnj" -GivenName "johnj" -SamAccountName "johnj" -AccountPassword (ConvertTo-SecureString "Player1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "johnj" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "johnj" -AllowReversiblePasswordEncryption $true
 
-New-ADUser -Name "jimbob" -GivenName "jimbob" -SamAccountName "jimbob" -AccountPassword (ConvertTo-(ConvertTo-SecureString "Gosportsteam1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "jimbob" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "jimbob"
+New-ADUser -Name "jimbob" -GivenName "jimbob" -SamAccountName "jimbob" -AccountPassword (ConvertTo-SecureString "Gosportsteam1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "jimbob" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "jimbob"
 
 New-ADUser -Name "da-jimbob" -GivenName "jimbob" -SamAccountName "da-jimbob" -AccountPassword (ConvertTo-SecureString "Gosportsteam1" -AsPlainText -Force) -ChangePasswordAtLogon $false -DisplayName "da-jimbob" -Enabled $true -PasswordNeverExpires $true -UserPrincipalName "da-jimbob"
 
